@@ -19,4 +19,6 @@ use App\Http\Controllers\Api\EntryController;
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
 Route::post('/entries/create', [EntryController::class, 'createEntry'])->middleware('auth:sanctum');
+Route::get('/entries/all', [EntryController::class, 'all'])->middleware('auth:sanctum');
+Route::post('/entries/delimer', [EntryController::class, 'delimer'])->middleware('auth:sanctum');
 

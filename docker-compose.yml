@@ -48,6 +48,19 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    webserver:
+         image: nginx:alpine
+         container_name: webserver
+         restart: unless-stopped
+         tty: true
+         ports:
+           - "80:80"
+           - "443:443"
+         networks:
+           - sail
+         volumes:
+           - ./nginx/www:/var/www
+           - ./nginx/conf.d/:/etc/nginx/conf.d/
 networks:
     sail:
         driver: bridge

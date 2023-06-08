@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateEntryRequest extends FormRequest
+class DelimerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,14 +19,11 @@ class CreateEntryRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-        'entry_id' => 'nullable|numeric|exists:entries,id',
-        'name' => 'required',
-        'date_expire' => 'required|date',
-        'to_buy' => 'required|numeric',
-        'amount' => 'required|numeric'
+            'val_token' => 'required',
+            'name' => 'required'
         ];
     }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -11,10 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Entries', function (Blueprint $table) {
-            $table->id();
+        Schema::create('entries', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer("user_id")->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('name');
-            $table->date('date_added');
             $table->date('date_expire');
             $table->integer('to_buy');
             $table->integer('amount');
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Entries');
+        Schema::dropIfExists('entries');
     }
 };
