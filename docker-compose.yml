@@ -48,19 +48,16 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
-    webserver:
-         image: nginx:alpine
-         container_name: webserver
-         restart: unless-stopped
-         tty: true
-         ports:
-           - "80:80"
-           - "443:443"
-         networks:
-           - sail
-         volumes:
-           - ./nginx/www:/var/www
-           - ./nginx/conf.d/:/etc/nginx/conf.d/
+    php-apache-environment:
+        container_name: php-apache
+        image: php:8.0-apache
+        ports: 
+            - 80:80
+        volumes:
+            - ./nginx/www:/var/www/html/
+        networks:
+            - sail
+
 networks:
     sail:
         driver: bridge
