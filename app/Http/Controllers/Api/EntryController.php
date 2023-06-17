@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateEntryRequest;
 use App\Http\Requests\DelimerRequest;
+use App\Http\Requests\DeleteRequest;
 use Illuminate\Support\Facades\Auth;
 
 class EntryController extends Controller
@@ -21,6 +22,7 @@ class EntryController extends Controller
             $entry->name = $request->name;
             $entry->date_expire = date("yy-m-d" ,strtotime($request->date_expire));
             $entry->to_buy = $request->to_buy;
+            $entry->user_id = $user->id;
             $entry->amount = $request->amount;
 
             $user = $user -> entries() -> save($entry);
@@ -77,6 +79,15 @@ class EntryController extends Controller
         return response()->json([
             'status' => true,
             'entries' => $user->entries
+        ]);
+    }
+
+    public function delete(DeleteRequest $request){
+        $entry = Entry::find($request->entry_id);
+        $entry->delete();
+        return response()->json([
+            'status' => true,
+            'message' => "Entry of id {$request->entry_id} deleted succesfuly!"
         ]);
     }
 }
